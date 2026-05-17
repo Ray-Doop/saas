@@ -4,20 +4,39 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.smartcloud</groupId>
-    <artifactId>smart-cloud</artifactId>
+    <groupId>com.skynet</groupId>
+    <artifactId>sky-net-ecommerce-platform</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>智绘云 - 企业级AIGC电商营销SaaS平台</name>
-    <description>基于Spring Cloud Alibaba的AIGC电商营销SaaS平台父工程</description>
+    <name>SkyNet - 企业级AI电商操作系统</name>
+    <description>基于Spring Cloud Alibaba的企业级AI电商操作系统父工程</description>
 
     <modules>
-        <module>smart-cloud-common</module>
-        <module>smart-cloud-gateway</module>
-        <module>smart-cloud-auth</module>
-        <module>smart-cloud-product</module>
-        <module>smart-cloud-workflow</module>
-        <module>smart-cloud-task</module>
+        <!-- 1. 基础设施与公共组件层 -->
+        <module>sky-net-common-core</module>
+        <module>sky-net-common-security</module>
+        <module>sky-net-common-redis</module>
+        <module>sky-net-common-mybatis</module>
+        <module>sky-net-common-oss</module>
+        <module>sky-net-common-excel</module>
+
+        <!-- 2. 系统核心服务层 -->
+        <module>sky-net-gateway</module>
+        <module>sky-net-auth</module>
+        <module>sky-net-system</module>
+
+        <!-- 3. 业务中台服务层 -->
+        <module>sky-net-shop-aggregator</module>
+        <module>sky-net-product-workshop</module>
+        <module>sky-net-fulfillment</module>
+        <module>sky-net-finance</module>
+        <module>sky-net-data-brain</module>
+
+        <!-- 4. AI算力与推理层 (Python项目，不在Maven中构建) -->
+
+        <!-- 5. 运维与监控体系 -->
+        <module>sky-net-visual-monitor</module>
+        <module>sky-net-visual-log</module>
     </modules>
 
     <properties>
@@ -40,6 +59,7 @@
         <!-- Middleware -->
         <rocketmq.version>5.1.0</rocketmq.version>
         <seata.version>1.7.0</seata.version>
+        <redisson.version>3.24.3</redisson.version>
 
         <!-- Utilities -->
         <hutool.version>5.8.23</hutool.version>
@@ -48,6 +68,7 @@
         <lombok.version>1.18.30</lombok.version>
         <minio.version>8.5.5</minio.version>
         <jjwt.version>0.12.3</jjwt.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
 
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -131,11 +152,25 @@
                 <version>${spring-cloud-alibaba.version}</version>
             </dependency>
 
+            <!-- Redisson -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
             <!-- MinIO -->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+
+            <!-- EasyExcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
             </dependency>
 
             <!-- Hutool -->
@@ -145,7 +180,7 @@
                 <version>${hutool.version}</version>
             </dependency>
 
-            <!-- Knife4j API文档 -->
+            <!-- Knife4j -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
@@ -176,10 +211,35 @@
                 <version>${jjwt.version}</version>
             </dependency>
 
-            <!-- Common Module -->
+            <!-- SkyNet Common Modules -->
             <dependency>
-                <groupId>com.smartcloud</groupId>
-                <artifactId>smart-cloud-common</artifactId>
+                <groupId>com.skynet</groupId>
+                <artifactId>sky-net-common-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.skynet</groupId>
+                <artifactId>sky-net-common-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.skynet</groupId>
+                <artifactId>sky-net-common-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.skynet</groupId>
+                <artifactId>sky-net-common-mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.skynet</groupId>
+                <artifactId>sky-net-common-oss</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.skynet</groupId>
+                <artifactId>sky-net-common-excel</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

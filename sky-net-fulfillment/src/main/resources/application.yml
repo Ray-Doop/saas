@@ -1,0 +1,33 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: sky-net-fulfillment
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/smart_cloud?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai
+    username: smartcloud
+    password: smartcloud123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        username: nacos
+        password: nacos
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: task-producer-group
+    send-message-timeout: 30000

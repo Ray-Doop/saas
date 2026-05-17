@@ -1,0 +1,92 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sky-net-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: public
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: public
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # Auth Service
+        - id: auth-service
+          uri: lb://sky-net-auth
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=0
+
+        # System Service
+        - id: system-service
+          uri: lb://sky-net-system
+          predicates:
+            - Path=/api/system/**
+          filters:
+            - StripPrefix=0
+
+        # Shop Aggregator Service
+        - id: shop-aggregator-service
+          uri: lb://sky-net-shop-aggregator
+          predicates:
+            - Path=/api/shop/**
+          filters:
+            - StripPrefix=0
+
+        # Product Workshop Service
+        - id: product-workshop-service
+          uri: lb://sky-net-product-workshop
+          predicates:
+            - Path=/api/product/**,/api/workflow/**
+          filters:
+            - StripPrefix=0
+
+        # Fulfillment Service
+        - id: fulfillment-service
+          uri: lb://sky-net-fulfillment
+          predicates:
+            - Path=/api/fulfillment/**,/api/task/**
+          filters:
+            - StripPrefix=0
+
+        # Finance Service
+        - id: finance-service
+          uri: lb://sky-net-finance
+          predicates:
+            - Path=/api/finance/**
+          filters:
+            - StripPrefix=0
+
+        # Data Brain Service
+        - id: data-brain-service
+          uri: lb://sky-net-data-brain
+          predicates:
+            - Path=/api/data-brain/**
+          filters:
+            - StripPrefix=0
+
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080
+
+# 放行路径(白名单)
+gateway:
+  white-list:
+    - /api/auth/login
+    - /api/auth/register
+    - /api/auth/public/**
+    - /doc.html
+    - /webjars/**
+    - /v3/api-docs/**

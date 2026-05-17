@@ -1,0 +1,22 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: sky-net-shop-aggregator
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/smart_cloud?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
